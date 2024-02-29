@@ -1,5 +1,4 @@
 import React from "react";
-import Connector from "./Connector";
 
 interface Person {
   name: string;
@@ -34,40 +33,6 @@ const TreeNode: React.FC<{ person: Person; level: number }> = ({ person, level }
 };
 
 const Tree: React.FC<TreeProps> = ({ data }) => {
-  const [connectors, setConnectors] = React.useState<JSX.Element[]>([]);
-
-  React.useEffect(() => {
-    const lines: JSX.Element[] = [];
-
-    const calculateConnectors = (node: HTMLElement | null) => {
-      if (!node) return;
-
-      const { top, left, height, width } = node.getBoundingClientRect();
-
-      if (node.children.length > 0) {
-        const children = Array.from(node.children) as HTMLElement[];
-        const child = children[0];
-        const childRect = child.getBoundingClientRect();
-
-        const startX = left + width / 2;
-        const startY = top + height;
-
-        const endX = childRect.left + childRect.width / 2;
-        const endY = childRect.top;
-
-        lines.push(
-          <Connector key={`${startX}${startY}${endX}${endY}`} startX={startX} startY={startY} endX={endX} endY={endY} />
-        );
-
-        children.forEach((child) => calculateConnectors(child));
-      }
-    };
-
-    calculateConnectors(document.getElementById("tree"));
-
-    setConnectors(lines);
-  }, [data]);
-
   return (
     <div style={{ position: "relative", textAlign: "center" }}>
       <div id="tree">
