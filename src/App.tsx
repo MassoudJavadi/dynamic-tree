@@ -1,31 +1,29 @@
 // App.tsx
 import React from "react";
-import Tree from "./components/Tree";
+import Tree from "react-d3-tree";
+import { treeData } from "./data";
+import { makeStyles } from "@mui/styles";
+import { Container } from "@mui/material";
 
-interface Person {
-  name: string;
-  children?: Person[];
-}
+// Define styles for the tree container
+const useStyles = makeStyles({
+  treeContainer: {
+    height: "100vh",
+    width: "100%",
+  },
+});
 
 const App: React.FC = () => {
-  // Sample data with a root node and its children
-  const data: Person = {
-    name: "Root",
-    children: [
-      {
-        name: "Node 1",
-        children: [{ name: "Node 1.1" }, { name: "Node 1.2" }],
-      },
-      {
-        name: "Node 2",
-        children: [{ name: "Node 2.1" }, { name: "Node 2.2" }],
-      },
-    ],
-  };
-
+  const classes = useStyles();
   return (
     <div className="App">
-      <Tree data={data} />
+      <Tree
+        data={treeData}
+        orientation="vertical"
+        separation={{ siblings: 1, nonSiblings: 2 }}
+        transitionDuration={0}
+        nodeSvgShape={{ shape: "circle", shapeProps: { r: 10 } }}
+      />
     </div>
   );
 };
