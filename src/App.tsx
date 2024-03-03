@@ -22,7 +22,7 @@ const App: React.FC = () => {
         orientation="vertical"
         separation={{ siblings: 1, nonSiblings: 2 }}
         transitionDuration={0}
-        nodeSvgShape={{ shape: "circle", shapeProps: { r: 10 } }}
+        // nodeSvgShape={{ shape: "circle", shapeProps: { r: 10 } }}
       />
     </div>
   );
