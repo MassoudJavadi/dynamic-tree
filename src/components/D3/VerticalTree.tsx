@@ -3,6 +3,8 @@ import { Tree } from "react-d3-tree";
 import { Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { treeData } from "../../data";
+import { assignLevelsToNodes } from "../../helpers/assignLevelsToNode";
+import CustomNode from "./CustomNode";
 
 // Define styles for the tree container
 const useStyles = makeStyles({
@@ -19,8 +21,14 @@ const VerticalTree: React.FC = () => {
   const classes = useStyles();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
+  const [data, setData] = useState(treeData);
 
   useEffect(() => {
+    const treeDataCopy = JSON.parse(JSON.stringify(treeData));
+    assignLevelsToNodes(treeDataCopy);
+
+    // Update the state with the modified tree data
+    setData(treeDataCopy);
     const handleResize = () => {
       if (containerRef.current) {
         const { width, height } = containerRef.current.getBoundingClientRect();
@@ -41,10 +49,11 @@ const VerticalTree: React.FC = () => {
   return (
     <Container ref={containerRef} className={classes.treeContainer}>
       <Tree
-        data={treeData}
+        data={data}
         orientation="vertical"
         translate={translate}
         separation={{ siblings: 1, nonSiblings: 1.5 }}
+        renderCustomNodeElement={(rd3tProps) => <CustomNode {...rd3tProps} />}
         // pathFunc="diagonal"
         transitionDuration={0}
       />
