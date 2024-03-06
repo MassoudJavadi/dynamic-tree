@@ -54,7 +54,7 @@ const VerticalTree: React.FC = () => {
         translate={translate}
         separation={{ siblings: 1, nonSiblings: 1.5 }}
         renderCustomNodeElement={(rd3tProps) => <CustomNode {...rd3tProps} />}
-        // pathFunc="diagonal"
+        pathFunc="step"
         transitionDuration={0}
       />
     </Container>
