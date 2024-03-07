@@ -15,4 +15,5 @@ code {
   stroke-dasharray: 5, 5 !important; /* Dashed pattern */
   stroke-width: 1; /* Line thickness */
   stroke-linecap: round !important; /* Rounded ends */
+  stroke-linejoin: round !important; /* Rounded corners */
 }

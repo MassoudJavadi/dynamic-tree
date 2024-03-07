@@ -5,7 +5,6 @@ import { makeStyles } from "@mui/styles";
 import { treeData } from "../../data";
 import { assignLevelsToNodes } from "../../helpers/assignLevelsToNode";
 import CustomNode from "./CustomNode";
-import CustomLink from "./CustomLink";
 
 // Define styles for the tree container
 const useStyles = makeStyles({
@@ -16,9 +15,16 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
   },
+  scrollableContainer: {
+    overflow: "auto", // Set overflow to auto or scroll
+    width: "100%",
+    height: "100%",
+  },
 });
-
-const VerticalTree: React.FC = () => {
+interface VerticalTreeProps {
+  name: string;
+}
+const VerticalTree: React.FC<VerticalTreeProps> = ({ name }) => {
   const classes = useStyles();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
@@ -47,19 +53,36 @@ const VerticalTree: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const scrollToNode = (nodeElement: HTMLElement | SVGElement | null) => {
+    if (nodeElement) {
+      setTimeout(() => {
+        nodeElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "nearest",
+        });
+      }, 100); // Adjust the delay as needed
+    }
+  };
+
   return (
-    <Container ref={containerRef} className={classes.treeContainer}>
-      <Tree
-        data={data}
-        orientation="vertical"
-        translate={translate}
-        separation={{ siblings: 1, nonSiblings: 1.5 }}
-        renderCustomNodeElement={(rd3tProps) => <CustomNode {...rd3tProps} />}
-        pathFunc="step"
-        transitionDuration={0}
-        pathClassFunc={() => "custom-link"}
-      />
-    </Container>
+    <div className={classes.scrollableContainer} ref={containerRef}>
+      <input></input>
+      <Container className={classes.treeContainer}>
+        <Tree
+          data={data}
+          orientation="vertical"
+          translate={translate}
+          separation={{ siblings: 1, nonSiblings: 1.5 }}
+          renderCustomNodeElement={(rd3tProps) => (
+            <CustomNode {...rd3tProps} scrollToNode={scrollToNode} containerRef={containerRef} name={name} />
+          )}
+          pathFunc="step"
+          transitionDuration={0}
+          pathClassFunc={() => "custom-link"}
+        />
+      </Container>
+    </div>
   );
 };
 

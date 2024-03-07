@@ -1,12 +1,15 @@
 // App.tsx
-import React from "react";
+import React, { useState } from "react";
 
 import VerticalTree from "./components/D3/VerticalTree";
 
 const App: React.FC = () => {
+  const [name, setName] = useState("");
   return (
     <div className="App">
-      <VerticalTree />
+      <div style={{ height: "90vh", background: "red" }}>
+        <VerticalTree name={name} />
+      </div>
     </div>
   );
 };
