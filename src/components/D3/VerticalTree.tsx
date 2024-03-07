@@ -5,6 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { treeData } from "../../data";
 import { assignLevelsToNodes } from "../../helpers/assignLevelsToNode";
 import CustomNode from "./CustomNode";
+import CustomLink from "./CustomLink";
 
 // Define styles for the tree container
 const useStyles = makeStyles({
@@ -56,6 +57,7 @@ const VerticalTree: React.FC = () => {
         renderCustomNodeElement={(rd3tProps) => <CustomNode {...rd3tProps} />}
         pathFunc="step"
         transitionDuration={0}
+        pathClassFunc={() => "custom-link"}
       />
     </Container>
   );
