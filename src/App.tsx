@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const [name, setName] = useState("");
   return (
     <div className="App">
-      <div style={{ height: "90vh", background: "red" }}>
+      <div>
         <VerticalTree name={name} />
       </div>
     </div>
